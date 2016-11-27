@@ -32,9 +32,10 @@ public class ReviewsDAOImpl extends JdbcDaoSupport implements ReviewsDAO {
 					public Review mapRow(ResultSet rs, int rowNum)
 							throws SQLException {
 						Review review = new Review();
-						review.setReviewerName(rs.getString("NAME"));
 						review.setStars(rs.getInt("STARS"));
 						review.setText(rs.getString("TEXT"));	//Not sure about this
+						review.setReviewDate(rs.getDate("REVIEW_DATE"));
+						review.setReviwerId(rs.getString("USER_ID"));
 						return review;
 					}
 

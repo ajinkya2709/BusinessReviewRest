@@ -28,10 +28,12 @@ public class BRSQueries {
 			+ "where trim(NAME) = ?   "
 			+ "group by NAME    ";
 
-	public static final String SELECT_TOP_REVIEWS_FOR_BUSINESS = "select t2.NAME,t1.STARS,t1.TEXT   "
-			+ "from reviews t1 inner join reviewer t2    "
-			+ "on t1.USER_ID = t2.USER_ID    "
-			+ "where t1.BUSINESS_ID = ?   "
-			+ "order by t1.STARS desc,t2.NAME     " + "limit 0,5;    ";
+	public static final String SELECT_TOP_REVIEWS_FOR_BUSINESS = "select USER_ID,TEXT,REVIEW_DATE,STARS     "
+			+ "from reviews     "
+			+ "where BUSINESS_ID = ?    "
+			+ "order by REVIEW_DATE desc    " + "limit 0,5";
+
+	public static final String GET_REVIWERNAME_FROM_ID = "select NAME     "
+			+ "from reviewer     " + "where USER_ID in (:userIDs)    ";
 
 }

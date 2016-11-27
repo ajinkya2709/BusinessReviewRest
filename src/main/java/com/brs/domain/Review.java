@@ -1,10 +1,14 @@
 package com.brs.domain;
 
+import java.util.Date;
+
 public class Review {
 
-	public String reviewerName;
-	public Integer stars;
-	public String text;
+	private String reviewerName;
+	private Integer stars;
+	private String text;
+	private String reviwerId;
+	private Date reviewDate;
 
 	public String getReviewerName() {
 		return reviewerName;
@@ -28,6 +32,22 @@ public class Review {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public String getReviwerId() {
+		return reviwerId;
+	}
+
+	public void setReviwerId(String reviwerId) {
+		this.reviwerId = reviwerId;
+	}
+
+	public Date getReviewDate() {
+		return reviewDate;
+	}
+
+	public void setReviewDate(Date reviewDate) {
+		this.reviewDate = reviewDate;
 	}
 
 }

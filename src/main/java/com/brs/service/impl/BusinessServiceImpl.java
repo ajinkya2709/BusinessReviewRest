@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.brs.dao.BusinessDAO;
+import com.brs.dao.ReviewerDAO;
 import com.brs.dao.ReviewsDAO;
 import com.brs.domain.Business;
 import com.brs.domain.Review;
@@ -25,6 +26,9 @@ public class BusinessServiceImpl implements BusinessService{
 	private ReviewsDAO reviewsDAO;
 	
 	@Autowired
+	private ReviewerDAO reviewerDAO;
+	
+	@Autowired
 	private BusinessMapper mapper;
 
 	public List<BusinessVO> getBusinessesBasedOnCategory(String city,
@@ -39,8 +43,9 @@ public class BusinessServiceImpl implements BusinessService{
 		Business business = businessDAO.fetchBusinessBasedOnName(name);
 		BusinessVO result = mapper.mapObject(business);
 		System.out.println("Business details fetched. Fetchiing Reviews");
-		/*List<Review> reviews = reviewsDAO.getReviewsForBusiness(result.getId());
-		result.setReviews(reviews);*/
+		List<Review> reviews = reviewsDAO.getReviewsForBusiness(result.getId());
+		reviewerDAO.findAndSetReviewerName(reviews);
+		result.setReviews(reviews);
 		return result;
 	}
 	

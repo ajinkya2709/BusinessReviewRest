@@ -17,12 +17,12 @@ public class BusinessController {
 	@Autowired
 	private BusinessService businessService;
 	
-	@GetMapping("/{city}")
+	@GetMapping("/city/{city}")
 	public List<BusinessVO> getRestaurants(@PathVariable("city") String city){
 		return businessService.getBusinessesBasedOnCategory(city, BRSConstants.RESTAURANT_URL);
 	}
 	
-	@GetMapping("/{city}/{category}")
+	@GetMapping("/city/{city}/{category}")
 	public List<BusinessVO> getBusinessesBasedOnCategory(@PathVariable("city") String city,@PathVariable("category") String category){
 		return businessService.getBusinessesBasedOnCategory(city, category);
 		
