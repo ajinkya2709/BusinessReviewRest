@@ -1,7 +1,10 @@
 package com.brs.constants;
 
 public class BRSQueries {
-
+	
+	
+	public static final String SELECT_CITY_NAMES_QUERY = "Select CITY from business group by CITY";
+	
 	public static final String SELECT_BUSINESS_BY_CATEGORY_QUERY = "select NAME,BUSINESS_ID,REVIEW_COUNT,STARS	"
 			+ "from business	"
 			+ "where trim(CITY) = ?	"

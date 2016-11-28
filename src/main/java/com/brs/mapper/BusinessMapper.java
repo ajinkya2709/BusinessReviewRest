@@ -25,6 +25,7 @@ public class BusinessMapper {
 			BusinessVO vo = new BusinessVO();
 			vo.setName(business.getName());
 			vo.setStars(business.getStars());
+			vo.setCity(business.getCity());
 			voList.add(vo);
 		}
 

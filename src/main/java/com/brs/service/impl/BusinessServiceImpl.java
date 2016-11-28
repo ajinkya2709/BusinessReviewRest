@@ -30,7 +30,13 @@ public class BusinessServiceImpl implements BusinessService{
 	
 	@Autowired
 	private BusinessMapper mapper;
-
+	
+	
+	public List<String> getAllCityNames(){
+		List<String> domainList = businessDAO.fetchAllCityNames();
+		return domainList;
+	}
+	
 	public List<BusinessVO> getBusinessesBasedOnCategory(String city,
 			String category) {
 		System.out.println("Parameters in service :"+city+"\t"+category);

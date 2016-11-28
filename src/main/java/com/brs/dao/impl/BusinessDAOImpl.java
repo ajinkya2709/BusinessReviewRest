@@ -24,7 +24,18 @@ public class BusinessDAOImpl extends JdbcDaoSupport implements BusinessDAO {
 	public BusinessDAOImpl(DataSource dataSource) {
 		this.setDataSource(dataSource);
 	}
-
+	
+	public List<String> fetchAllCityNames(){
+		List<String> result = getJdbcTemplate().query(SELECT_CITY_NAMES_QUERY,
+				new RowMapper<String>(){
+			public String mapRow(ResultSet rs, int rowNum)
+					throws SQLException {
+				return rs.getString("CITY");
+			}
+		});
+		return result;
+	}
+	
 	public List<Business> fetchBusinessesBasedOnCategory(String city,
 			String category) {
 		System.out.println("Parameters :" + city + "\t" + category);
