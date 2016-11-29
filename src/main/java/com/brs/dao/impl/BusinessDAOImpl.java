@@ -89,6 +89,40 @@ public class BusinessDAOImpl extends JdbcDaoSupport implements BusinessDAO {
 		return result;
 	}
 	
+	public Business fetchBusinessBasedOnId(String Id) {
+		System.out.println("Business Id :" + Id);
+		Business result = getJdbcTemplate().queryForObject(
+				SELECT_BUSINESS_BY_ID_QUERY, new Object[] { Id },
+				new int[] { Types.VARCHAR }, new RowMapper<Business>() {
+					public Business mapRow(ResultSet rs, int rowNum)
+							throws SQLException {
+						Business business = new Business();
+						business.setId(rs.getString("BUSINESS_ID"));
+						business.setName(rs.getString("NAME"));
+						business.setReviewCount(rs.getInt("REVIEW_COUNT"));
+						business.setStars(rs.getInt("STARS"));
+						business.setCity(rs.getString("CITY"));
+						business.getAttributes().put("ATTRIBUTES_TAKES_RESERVATIONS", rs.getString("ATTRIBUTES_TAKES_RESERVATIONS"));
+						business.getAttributes().put("ATTRIBUTES_DELIVERY", rs.getString("ATTRIBUTES_DELIVERY"));
+						business.getAttributes().put("Takeout", rs.getString("ATTRIBUTES_TAKEOUT"));
+						business.getAttributes().put("Accept Credit Cards", rs.getString("ATTRIBUTES_ACCEPTSCREDITCARDS"));
+						business.getAttributes().put("WheelChair", rs.getString("ATTRIBUTES_WHEELCHAIR"));
+						business.getAttributes().put("GoodForKids", rs.getString("ATTRIBUTES_GOODFOR_KIDS"));
+						business.getAttributes().put("Good For Groups", rs.getString("ATTRIBUTES_GOODFOR_GROUPS"));
+						business.getAttributes().put("Alchohol", rs.getString("ATTRIBUTES_ALCOHOL"));
+						business.getAttributes().put("NoiseLevel", rs.getString("ATTRIBUTES_NOISELEVEL"));
+						business.getAttributes().put("ByAppointment", rs.getString("ATTRIBUTES_BYAPPOINTMENTONLY"));
+						business.getAttributes().put("WaiterService", rs.getString("ATTRIBUTES_WAITERSERVICE"));
+						business.getAttributes().put("Parking Lot", rs.getString("ATTRIBUTES_PARKINGLOT"));
+						business.getAttributes().put("Parking Valet", rs.getString("ATTRIBUTES_PARKING_VALET"));
+						
+						return business;
+					}
+
+				});
+
+		return result;
+	}
 	
 
 }

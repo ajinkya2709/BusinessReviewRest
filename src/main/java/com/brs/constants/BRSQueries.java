@@ -30,7 +30,31 @@ public class BRSQueries {
 			+ "from business    "
 			+ "where trim(NAME) = ?   "
 			+ "group by NAME    ";
-
+	
+	
+	public static final String SELECT_BUSINESS_BY_ID_QUERY = "select NAME,    "
+			+ "REVIEW_COUNT,    "
+			+ "BUSINESS_ID,    "
+			+ "STARS,    "
+			+ "ATTRIBUTES_TAKES_RESERVATIONS,    "
+			+ "ATTRIBUTES_DELIVERY,    "
+			+ "ATTRIBUTES_TAKEOUT,    "
+			+ "ATTRIBUTES_ACCEPTSCREDITCARDS,    "
+			+ "ATTRIBUTES_WHEELCHAIR,    "
+			+ "ATTRIBUTES_GOODFOR_KIDS,    "
+			+ "ATTRIBUTES_GOODFOR_GROUPS,    "
+			+ "ATTRIBUTES_ALCOHOL,    "
+			+ "ATTRIBUTES_NOISELEVEL,    "
+			+ "ATTRIBUTES_BYAPPOINTMENTONLY ,    "
+			+ "ATTRIBUTES_WAITERSERVICE,    "
+			+ "ATTRIBUTES_PARKINGLOT,    "
+			+ "ATTRIBUTES_PARKING_VALET,    "
+			+ "CITY    "
+			+ "from business    "
+			+ "where BUSINESS_ID = ?   "+ "limit 0,1  ";
+			
+	
+	
 	public static final String SELECT_TOP_REVIEWS_FOR_BUSINESS = "select USER_ID,TEXT,REVIEW_DATE,STARS     "
 			+ "from reviews     "
 			+ "where BUSINESS_ID = ?    "

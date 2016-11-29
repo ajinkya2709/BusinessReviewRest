@@ -12,4 +12,6 @@ public interface BusinessService {
 	
 	public BusinessVO getBusinessDetails(String name);
 	
+	public BusinessVO getBusinessDetailsById(String Id);
+	
 }

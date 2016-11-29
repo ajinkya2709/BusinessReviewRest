@@ -55,6 +55,14 @@ public class BusinessServiceImpl implements BusinessService{
 		return result;
 	}
 	
-	
+	public BusinessVO getBusinessDetailsById(String Id) {
+		Business business = businessDAO.fetchBusinessBasedOnId(Id);
+		BusinessVO result = mapper.mapObject(business);
+		System.out.println("Business details fetched. Fetchiing Reviews");
+		List<Review> reviews = reviewsDAO.getReviewsForBusiness(result.getId());
+		reviewerDAO.findAndSetReviewerName(reviews);
+		result.setReviews(reviews);
+		return result;
+	}
 
 }

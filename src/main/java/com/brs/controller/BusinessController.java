@@ -35,9 +35,9 @@ public class BusinessController {
 		
 	}
 	
-	@GetMapping("/business/{name}")
-	public BusinessVO getBusinessDetails(@PathVariable("name") String name){
-		return businessService.getBusinessDetails(name);
+	@GetMapping("/business/{Id}")
+	public BusinessVO getBusinessDetails(@PathVariable("Id") String Id){
+		return businessService.getBusinessDetailsById(Id);
 	}
 
 }

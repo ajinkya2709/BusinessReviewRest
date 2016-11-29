@@ -12,5 +12,7 @@ public interface BusinessDAO {
 			String category);
 	
 	public Business fetchBusinessBasedOnName(String name);
+	
+	public Business fetchBusinessBasedOnId(String Id);
 
 }
