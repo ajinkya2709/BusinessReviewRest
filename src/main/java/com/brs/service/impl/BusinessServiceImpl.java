@@ -105,6 +105,7 @@ public class BusinessServiceImpl implements BusinessService{
 		BusinessVO result = mapper.mapObject(business);
 		System.out.println("Business details fetched. Fetchiing Reviews");
 		List<Review> reviews = reviewsDAO.getReviewsForBusiness(result.getId());
+
 		if(!reviews.isEmpty()){
 		reviewerDAO.findAndSetReviewerName(reviews);
 		}
@@ -113,4 +114,8 @@ public class BusinessServiceImpl implements BusinessService{
 		return result;
 	}
 
+	public boolean setUserReviewBasedOnBusiness(String business_id, String user_id, String text, int stars) {
+		return	reviewsDAO.setReviewForBusiness(business_id,user_id,text,stars);
+	}	
+	
 }

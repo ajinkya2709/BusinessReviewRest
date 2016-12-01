@@ -21,5 +21,8 @@ public interface BusinessService {
 	public BusinessVO getBusinessDetailsNoMemcached(String name);
 	
 	public BusinessVO getBusinessDetailsByIdNoMemcached(String Id);
+
+	public boolean setUserReviewBasedOnBusiness(String business_id, String user_id, String text, int stars);
+
 	
 }

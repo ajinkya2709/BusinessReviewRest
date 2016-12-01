@@ -1,6 +1,7 @@
 package com.brs.dao.impl;
 
 import static com.brs.constants.BRSQueries.SELECT_TOP_REVIEWS_FOR_BUSINESS;
+import static com.brs.constants.BRSQueries.SET_REVIEW_FOR_BUSINESS;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import com.brs.dao.ReviewsDAO;
 import com.brs.domain.Review;
+import com.mysql.jdbc.PreparedStatement;
 
 @Component
 public class ReviewsDAOImpl extends JdbcDaoSupport implements ReviewsDAO {
@@ -42,5 +44,9 @@ public class ReviewsDAOImpl extends JdbcDaoSupport implements ReviewsDAO {
 				});
 		System.out.println("Review List size:"+result.size());
 		return result;
+	}
+	
+	public boolean setReviewForBusiness(String business_id, String user, String text, int stars){
+		 return getJdbcTemplate().update(SET_REVIEW_FOR_BUSINESS, business_id, user, text, stars)==0 ? false : true; 
 	}
 }

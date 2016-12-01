@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.brs.constants.BRSConstants;
@@ -91,6 +92,11 @@ public class BusinessController {
 		long runTime = endTime - startTime;
 		businessVO.setRunTime(runTime);
 		return businessVO;
+	}
+	
+	@PutMapping("/postReview/{user_id}/{business_id}/{text}/{stars}")
+	public boolean setUserReview(@PathVariable("user_id") String user_id,@PathVariable("business_id") String business_id,@PathVariable("text") String text,@PathVariable("stars") int stars){
+		return businessService.setUserReviewBasedOnBusiness(business_id, user_id, text, stars);
 	}
 
 }
