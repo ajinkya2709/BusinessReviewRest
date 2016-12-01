@@ -1,13 +1,19 @@
 package com.brs.vo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
 import com.brs.domain.Review;
 
-public class BusinessVO {
+public class BusinessVO implements Serializable{
 
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -873116553571754806L;
 	private String name;
 	private String id;
 	private Integer reviewCount;
@@ -15,6 +21,7 @@ public class BusinessVO {
 	private String city;
 	private Hashtable<String, String> attributes = new Hashtable<String, String>();
 	private List<Review> reviews= new ArrayList<Review>();
+	private long runTime;
 
 	public String getName() {
 		return name;
@@ -70,6 +77,14 @@ public class BusinessVO {
 
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
+	}
+
+	public long getRunTime() {
+		return runTime;
+	}
+
+	public void setRunTime(long runTime) {
+		this.runTime = runTime;
 	}
 	
 	

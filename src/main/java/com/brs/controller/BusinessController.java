@@ -21,23 +21,76 @@ public class BusinessController {
 	
 	@GetMapping("/city")
 	public List<String> getCityNames(){
-		return businessService.getAllCityNames();
+		return businessService.getAllCityNames("cityName");
 	}
 	
 	@GetMapping("/city/{city}")
 	public List<BusinessVO> getRestaurants(@PathVariable("city") String city){
-		return businessService.getBusinessesBasedOnCategory(city, BRSConstants.RESTAURANT_URL);
+		
+		long startTime = System.currentTimeMillis();
+		List<BusinessVO> bVOList = businessService.getBusinessesBasedOnCategory(city, BRSConstants.RESTAURANT_URL);
+		long endTime = System.currentTimeMillis();
+		long runTime = endTime - startTime;
+		bVOList.get(0).setRunTime(runTime);
+		return bVOList;
 	}
 	
 	@GetMapping("/city/{city}/{category}")
 	public List<BusinessVO> getBusinessesBasedOnCategory(@PathVariable("city") String city,@PathVariable("category") String category){
-		return businessService.getBusinessesBasedOnCategory(city, category);
+		long startTime = System.currentTimeMillis();
+		List<BusinessVO> bVOList = businessService.getBusinessesBasedOnCategory(city, category);
+		long endTime = System.currentTimeMillis();
+		long runTime = endTime - startTime;
+		bVOList.get(0).setRunTime(runTime);
+		return bVOList;
 		
 	}
 	
 	@GetMapping("/business/{Id}")
 	public BusinessVO getBusinessDetails(@PathVariable("Id") String Id){
-		return businessService.getBusinessDetailsById(Id);
+		long startTime = System.currentTimeMillis();
+		BusinessVO businessVO = businessService.getBusinessDetailsById(Id);
+		long endTime = System.currentTimeMillis();
+		long runTime = endTime - startTime;
+		businessVO.setRunTime(runTime);
+		return businessVO;
+	}
+	
+	@GetMapping("/off/city")
+	public List<String> getCityNamesNoMemcached(){
+		return businessService.getAllCityNamesNoMemcached("cityName");
+	}
+	
+	@GetMapping("/off/city/{city}")
+	public List<BusinessVO> getRestaurantsNoMemcached(@PathVariable("city") String city){
+		
+		long startTime = System.currentTimeMillis();
+		List<BusinessVO> bVOList = businessService.getBusinessesBasedOnCategoryNoMemcached(city, BRSConstants.RESTAURANT_URL);
+		long endTime = System.currentTimeMillis();
+		long runTime = endTime - startTime;
+		bVOList.get(0).setRunTime(runTime);
+		return bVOList;
+	}
+	
+	@GetMapping("/off/city/{city}/{category}")
+	public List<BusinessVO> getBusinessesBasedOnCategoryNoMemcached(@PathVariable("city") String city,@PathVariable("category") String category){
+		long startTime = System.currentTimeMillis();
+		List<BusinessVO> bVOList = businessService.getBusinessesBasedOnCategoryNoMemcached(city, category);
+		long endTime = System.currentTimeMillis();
+		long runTime = endTime - startTime;
+		bVOList.get(0).setRunTime(runTime);
+		return bVOList;
+		
+	}
+	
+	@GetMapping("/off/business/{Id}")
+	public BusinessVO getBusinessDetailsNoMemcached(@PathVariable("Id") String Id){
+		long startTime = System.currentTimeMillis();
+		BusinessVO businessVO = businessService.getBusinessDetailsByIdNoMemcached(Id);
+		long endTime = System.currentTimeMillis();
+		long runTime = endTime - startTime;
+		businessVO.setRunTime(runTime);
+		return businessVO;
 	}
 
 }

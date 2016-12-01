@@ -13,6 +13,8 @@ import com.brs.domain.Review;
 import com.brs.mapper.BusinessMapper;
 import com.brs.service.BusinessService;
 import com.brs.vo.BusinessVO;
+import com.google.code.ssm.api.ParameterValueKeyProvider;
+import com.google.code.ssm.api.ReadThroughSingleCache;
 
 import static com.brs.constants.BRSConstants.*;
 
@@ -31,21 +33,23 @@ public class BusinessServiceImpl implements BusinessService{
 	@Autowired
 	private BusinessMapper mapper;
 	
-	
-	public List<String> getAllCityNames(){
+	@ReadThroughSingleCache(namespace = "cityName", expiration = 3600)
+	public List<String> getAllCityNames(@ParameterValueKeyProvider String s){
 		List<String> domainList = businessDAO.fetchAllCityNames();
 		return domainList;
 	}
 	
-	public List<BusinessVO> getBusinessesBasedOnCategory(String city,
-			String category) {
+	@ReadThroughSingleCache(namespace = "businessCat", expiration = 3600)
+	public List<BusinessVO> getBusinessesBasedOnCategory(@ParameterValueKeyProvider(order=1) String city,
+			@ParameterValueKeyProvider(order=2) String category) {
 		System.out.println("Parameters in service :"+city+"\t"+category);
 		List<Business> domainList = businessDAO.fetchBusinessesBasedOnCategory(city, keyWordMapping.get(category));
 		List<BusinessVO> result = mapper.mapList(domainList);
 		return result;
 	}
 
-	public BusinessVO getBusinessDetails(String name) {
+	@ReadThroughSingleCache(namespace = "businessName", expiration = 3600)
+	public BusinessVO getBusinessDetails(@ParameterValueKeyProvider String name) {
 		Business business = businessDAO.fetchBusinessBasedOnName(name);
 		BusinessVO result = mapper.mapObject(business);
 		System.out.println("Business details fetched. Fetchiing Reviews");
@@ -55,13 +59,57 @@ public class BusinessServiceImpl implements BusinessService{
 		return result;
 	}
 	
-	public BusinessVO getBusinessDetailsById(String Id) {
+	@ReadThroughSingleCache(namespace = "businessId", expiration = 3600)
+	public BusinessVO getBusinessDetailsById(@ParameterValueKeyProvider String Id) {
 		Business business = businessDAO.fetchBusinessBasedOnId(Id);
+		BusinessVO result = mapper.mapObject(business);
+		System.out.println("Business details fetched. Fetchiing Reviews");
+		List<Review> reviews = reviewsDAO.getReviewsForBusiness(result.getId());
+		if(!reviews.isEmpty()){
+		reviewerDAO.findAndSetReviewerName(reviews);
+		}
+		result.setReviews(reviews);
+
+		return result;
+	}
+	
+	
+	public List<String> getAllCityNamesNoMemcached( String s){
+		List<String> domainList = businessDAO.fetchAllCityNames();
+		return domainList;
+	}
+	
+	
+	public List<BusinessVO> getBusinessesBasedOnCategoryNoMemcached(String city,
+			 String category) {
+		System.out.println("Parameters in service :"+city+"\t"+category);
+		List<Business> domainList = businessDAO.fetchBusinessesBasedOnCategory(city, keyWordMapping.get(category));
+		List<BusinessVO> result = mapper.mapList(domainList);
+		return result;
+	}
+
+	
+	public BusinessVO getBusinessDetailsNoMemcached(String name) {
+		Business business = businessDAO.fetchBusinessBasedOnName(name);
 		BusinessVO result = mapper.mapObject(business);
 		System.out.println("Business details fetched. Fetchiing Reviews");
 		List<Review> reviews = reviewsDAO.getReviewsForBusiness(result.getId());
 		reviewerDAO.findAndSetReviewerName(reviews);
 		result.setReviews(reviews);
+		return result;
+	}
+	
+	
+	public BusinessVO getBusinessDetailsByIdNoMemcached(String Id) {
+		Business business = businessDAO.fetchBusinessBasedOnId(Id);
+		BusinessVO result = mapper.mapObject(business);
+		System.out.println("Business details fetched. Fetchiing Reviews");
+		List<Review> reviews = reviewsDAO.getReviewsForBusiness(result.getId());
+		if(!reviews.isEmpty()){
+		reviewerDAO.findAndSetReviewerName(reviews);
+		}
+		result.setReviews(reviews);
+
 		return result;
 	}
 

@@ -1,9 +1,14 @@
 package com.brs.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Review {
+public class Review implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 423125100291763815L;
 	private String reviewerName;
 	private Integer stars;
 	private String text;

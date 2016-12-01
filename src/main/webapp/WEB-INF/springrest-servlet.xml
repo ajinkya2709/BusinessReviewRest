@@ -18,7 +18,7 @@
 		<property name="password" value="Munna@1209" />
 	</bean>
 
-	<!-- <import resource="classpath:simplesm-context.xml" />
+	 <import resource="classpath:simplesm-context.xml" />
 	<aop:aspectj-autoproxy />
 
 	<bean name="defaultMemcachedClient" class="com.google.code.ssm.CacheFactory">
@@ -36,7 +36,7 @@
 				<property name="consistentHashing" value="true" />
 			</bean>
 		</property>
-	</bean> -->
+	</bean> 
 
 
 
