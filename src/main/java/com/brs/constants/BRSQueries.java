@@ -63,4 +63,7 @@ public class BRSQueries {
 	public static final String GET_REVIWERNAME_FROM_ID = "select NAME     "
 			+ "from reviewer     " + "where USER_ID in (:userIDs)    ";
 
+	public static final String SET_REVIEW_FOR_BUSINESS = "insert into reviews (user_id, business_id, text,stars) values "
+			+ "(?,?,?,?)";
+
 }

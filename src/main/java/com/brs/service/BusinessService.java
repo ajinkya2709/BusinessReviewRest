@@ -14,4 +14,6 @@ public interface BusinessService {
 	
 	public BusinessVO getBusinessDetailsById(String Id);
 	
+	public boolean setUserReviewBasedOnBusiness(String business_id, String user_id, String text, int stars);
+	
 }
