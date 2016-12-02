@@ -7,6 +7,7 @@ import static com.brs.constants.BRSQueries.SET_REVIEWERS_FOR_BUSINESS;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -54,9 +55,9 @@ public class ReviewsDAOImpl extends JdbcDaoSupport implements ReviewsDAO {
 	}
 	
 	public boolean setReviewForBusiness(String business_id, String user, String text, int stars){
-		 Date date = new Date();
-		 boolean a = getJdbcTemplate().update(SET_REVIEW_FOR_BUSINESS, business_id, user, text, stars, date)==0 ? false : true; 
-		// boolean b = getJdbcTemplate().update(SET_REVIEWERS_FOR_BUSINESS, user, user)==0 ? false : true; 
-		 return a;
+
+		 boolean b = getJdbcTemplate().update(SET_REVIEWERS_FOR_BUSINESS, user, user)==0 ? false : true;
+		 boolean a = getJdbcTemplate().update(SET_REVIEW_FOR_BUSINESS, user, business_id, text, stars, new java.sql.Date(Calendar.getInstance().getTimeInMillis()))==0 ? false : true;
+		 return a&&b;
 	}
 }

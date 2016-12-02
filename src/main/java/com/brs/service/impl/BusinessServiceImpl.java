@@ -115,7 +115,6 @@ public class BusinessServiceImpl implements BusinessService{
 	}
 
 	public boolean setUserReviewBasedOnBusiness(String business_id, String user_id, String text, int stars) {
-		reviewsDAO.setReviewerForReview(user_id);
 		return	reviewsDAO.setReviewForBusiness(business_id,user_id,text,stars);
 	}	
 	
