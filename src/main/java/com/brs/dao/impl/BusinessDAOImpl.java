@@ -38,7 +38,7 @@ public class BusinessDAOImpl extends JdbcDaoSupport implements BusinessDAO {
 	
 	public List<Business> fetchBusinessesBasedOnCategory(String city,
 			String category) {
-		System.out.println("Parameters :" + city + "\t" + category);
+		System.out.println("fetchBusinessesBasedOnCategory Parameters :" + city + "\t" + category);
 		List<Business> result = getJdbcTemplate().query(
 				SELECT_BUSINESS_BY_CATEGORY_QUERY,
 				new Object[] { city, category },
@@ -53,8 +53,11 @@ public class BusinessDAOImpl extends JdbcDaoSupport implements BusinessDAO {
 						business.setStars(rs.getInt("STARS"));
 						return business;
 					}
-
+					
 				});
+		for(Business business:result){
+			System.out.println("Business ID:"+business.getId());
+		}
 		System.out.println(result.size());
 		return result;
 	}

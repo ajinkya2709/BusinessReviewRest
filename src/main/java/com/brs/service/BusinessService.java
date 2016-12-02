@@ -22,7 +22,7 @@ public interface BusinessService {
 	
 	public BusinessVO getBusinessDetailsByIdNoMemcached(String Id);
 
-	public boolean setUserReviewBasedOnBusiness(String business_id, String user_id, String text, int stars);
+	public BusinessVO setUserReviewBasedOnBusiness(String business_id, String user_id, String text, int stars);
 
 	
 }

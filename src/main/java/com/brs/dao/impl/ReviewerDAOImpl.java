@@ -33,6 +33,8 @@ public class ReviewerDAOImpl extends NamedParameterJdbcDaoSupport implements
 		for (Review review : reviews) {
 			userIds.add(review.getReviwerId());
 		}
+		System.out.println("Printing User Ids for reviews");
+		System.out.println(userIds);
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("userIDs", userIds);
 		List<String> names = getNamedParameterJdbcTemplate().queryForList(

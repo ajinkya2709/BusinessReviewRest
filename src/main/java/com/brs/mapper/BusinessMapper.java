@@ -24,9 +24,8 @@ public class BusinessMapper {
 		for (Business business : businesses) {
 			BusinessVO vo = new BusinessVO();
 			vo.setName(business.getName());
-			vo.setId(business.getId());
 			vo.setStars(business.getStars());
-			vo.setCity(business.getCity());
+			vo.setId(business.getId());
 			voList.add(vo);
 		}
 

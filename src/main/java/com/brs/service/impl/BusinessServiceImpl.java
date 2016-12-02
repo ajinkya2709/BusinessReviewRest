@@ -15,6 +15,8 @@ import com.brs.service.BusinessService;
 import com.brs.vo.BusinessVO;
 import com.google.code.ssm.api.ParameterValueKeyProvider;
 import com.google.code.ssm.api.ReadThroughSingleCache;
+import com.google.code.ssm.api.ReturnDataUpdateContent;
+import com.google.code.ssm.api.UpdateSingleCache;
 
 import static com.brs.constants.BRSConstants.*;
 
@@ -94,7 +96,9 @@ public class BusinessServiceImpl implements BusinessService{
 		BusinessVO result = mapper.mapObject(business);
 		System.out.println("Business details fetched. Fetchiing Reviews");
 		List<Review> reviews = reviewsDAO.getReviewsForBusiness(result.getId());
-		reviewerDAO.findAndSetReviewerName(reviews);
+		if(!reviews.isEmpty()){
+			reviewerDAO.findAndSetReviewerName(reviews);
+		}
 		result.setReviews(reviews);
 		return result;
 	}
@@ -113,9 +117,16 @@ public class BusinessServiceImpl implements BusinessService{
 
 		return result;
 	}
-
-	public boolean setUserReviewBasedOnBusiness(String business_id, String user_id, String text, int stars) {
-		return	reviewsDAO.setReviewForBusiness(business_id,user_id,text,stars);
+	
+	@UpdateSingleCache(namespace = "businessId")
+	@ReturnDataUpdateContent
+	public BusinessVO setUserReviewBasedOnBusiness(@ParameterValueKeyProvider String business_id, String user_id, String text, int stars) {
+		System.out.println("setUserReviewBasedOnBusiness start");
+		System.out.println("Business ID"+business_id);
+		reviewsDAO.setReviewForBusiness(business_id,user_id,text,stars);
+		BusinessVO businessVO = getBusinessDetailsByIdNoMemcached(business_id);
+		System.out.println("setUserReviewBasedOnBusiness start");
+		return businessVO;
 	}	
 	
 }

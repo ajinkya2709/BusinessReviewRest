@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.brs.constants.BRSConstants;
 import com.brs.service.BusinessService;
 import com.brs.vo.BusinessVO;
+import com.brs.vo.ReviewVO;
 
 @CrossOrigin
 @RestController
@@ -95,8 +98,25 @@ public class BusinessController {
 	}
 	
 	@GetMapping("/postReview/{user_id}/{business_id}/{text}/{stars}")
-	public boolean setUserReview(@PathVariable("user_id") String user_id,@PathVariable("business_id") String business_id,@PathVariable("text") String text,@PathVariable("stars") int stars){
+	public BusinessVO setUserReview(@PathVariable("user_id") String user_id,@PathVariable("business_id") String business_id,@PathVariable("text") String text,@PathVariable("stars") int stars){
 		return businessService.setUserReviewBasedOnBusiness(business_id, user_id, text, stars);
+	}
+	
+	@PostMapping(value="/addReview")
+	@ResponseBody
+	public BusinessVO addReview(@RequestBody ReviewVO reviewVO){
+		System.out.println("Add Review started");
+		long startTime = System.currentTimeMillis();
+		BusinessVO businessVO = null;
+		if(reviewVO!=null){
+			System.out.println("reviewVO is NOT null");
+			System.out.println(reviewVO);
+			businessVO = businessService.setUserReviewBasedOnBusiness(reviewVO.getBusinessId(), reviewVO.getUserId(), reviewVO.getText(), reviewVO.getStars());
+		}
+		long endTime = System.currentTimeMillis();
+		long runTime = endTime - startTime;
+		businessVO.setRunTime(runTime);
+		return businessVO;
 	}
 
 }
