@@ -94,7 +94,7 @@ public class BusinessController {
 		return businessVO;
 	}
 	
-	@PutMapping("/postReview/{user_id}/{business_id}/{text}/{stars}")
+	@GetMapping("/postReview/{user_id}/{business_id}/{text}/{stars}")
 	public boolean setUserReview(@PathVariable("user_id") String user_id,@PathVariable("business_id") String business_id,@PathVariable("text") String text,@PathVariable("stars") int stars){
 		return businessService.setUserReviewBasedOnBusiness(business_id, user_id, text, stars);
 	}

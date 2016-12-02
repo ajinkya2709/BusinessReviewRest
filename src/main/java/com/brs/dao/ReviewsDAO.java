@@ -8,5 +8,6 @@ public interface ReviewsDAO {
 	
 	public List<Review> getReviewsForBusiness(String businessId);
 	public boolean setReviewForBusiness(String business_id, String user, String text, int stars);
+	public void setReviewerForReview(String user);
 
 }

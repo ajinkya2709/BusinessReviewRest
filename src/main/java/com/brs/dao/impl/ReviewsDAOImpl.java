@@ -2,12 +2,15 @@ package com.brs.dao.impl;
 
 import static com.brs.constants.BRSQueries.SELECT_TOP_REVIEWS_FOR_BUSINESS;
 import static com.brs.constants.BRSQueries.SET_REVIEW_FOR_BUSINESS;
+import static com.brs.constants.BRSQueries.SET_REVIEWERS_FOR_BUSINESS;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Date;
 import java.util.List;
 
+import javax.print.attribute.standard.DateTimeAtCompleted;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.RowMapper;
@@ -46,7 +49,14 @@ public class ReviewsDAOImpl extends JdbcDaoSupport implements ReviewsDAO {
 		return result;
 	}
 	
+	public void setReviewerForReview(String user){
+		getJdbcTemplate().update(SET_REVIEWERS_FOR_BUSINESS, user, user);
+	}
+	
 	public boolean setReviewForBusiness(String business_id, String user, String text, int stars){
-		 return getJdbcTemplate().update(SET_REVIEW_FOR_BUSINESS, business_id, user, text, stars)==0 ? false : true; 
+		 Date date = new Date();
+		 boolean a = getJdbcTemplate().update(SET_REVIEW_FOR_BUSINESS, business_id, user, text, stars, date)==0 ? false : true; 
+		// boolean b = getJdbcTemplate().update(SET_REVIEWERS_FOR_BUSINESS, user, user)==0 ? false : true; 
+		 return a;
 	}
 }
