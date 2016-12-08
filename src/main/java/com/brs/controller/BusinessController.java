@@ -32,9 +32,11 @@ public class BusinessController {
 	public List<BusinessVO> getRestaurants(@PathVariable("city") String city){
 		
 		long startTime = System.currentTimeMillis();
-		List<BusinessVO> bVOList = businessService.getBusinessesBasedOnCategory(city, BRSConstants.RESTAURANT_URL);
+		List<BusinessVO> bVOList = businessService.getBusinessesBasedOnCategory(city,city.replaceAll(" ","_") ,BRSConstants.RESTAURANT_URL);
 		long endTime = System.currentTimeMillis();
 		long runTime = endTime - startTime;
+		if(bVOList.isEmpty())
+			bVOList.add(new BusinessVO());
 		bVOList.get(0).setRunTime(runTime);
 		return bVOList;
 	}
@@ -42,9 +44,11 @@ public class BusinessController {
 	@GetMapping("/city/{city}/{category}")
 	public List<BusinessVO> getBusinessesBasedOnCategory(@PathVariable("city") String city,@PathVariable("category") String category){
 		long startTime = System.currentTimeMillis();
-		List<BusinessVO> bVOList = businessService.getBusinessesBasedOnCategory(city, category);
+		List<BusinessVO> bVOList = businessService.getBusinessesBasedOnCategory(city, city.replaceAll(" ","_"),category);
 		long endTime = System.currentTimeMillis();
 		long runTime = endTime - startTime;
+		if(bVOList.isEmpty())
+			bVOList.add(new BusinessVO());
 		bVOList.get(0).setRunTime(runTime);
 		return bVOList;
 		
@@ -72,6 +76,8 @@ public class BusinessController {
 		List<BusinessVO> bVOList = businessService.getBusinessesBasedOnCategoryNoMemcached(city, BRSConstants.RESTAURANT_URL);
 		long endTime = System.currentTimeMillis();
 		long runTime = endTime - startTime;
+		if(bVOList.isEmpty())
+			bVOList.add(new BusinessVO());
 		bVOList.get(0).setRunTime(runTime);
 		return bVOList;
 	}
@@ -82,6 +88,8 @@ public class BusinessController {
 		List<BusinessVO> bVOList = businessService.getBusinessesBasedOnCategoryNoMemcached(city, category);
 		long endTime = System.currentTimeMillis();
 		long runTime = endTime - startTime;
+		if(bVOList.isEmpty())
+			bVOList.add(new BusinessVO());
 		bVOList.get(0).setRunTime(runTime);
 		return bVOList;
 		

@@ -40,12 +40,10 @@ public class ReviewerDAOImpl extends NamedParameterJdbcDaoSupport implements
 		List<String> names = getNamedParameterJdbcTemplate().queryForList(
 				GET_REVIWERNAME_FROM_ID,
 				Collections.singletonMap("userIDs", userIds), null);
-		System.out.println("Printing Names");
-		for (String name : names) {
-			System.out.println(name);
-		}
+		System.out.println("Printing ID Name Mapping");
 		for (int i = 0; i < reviews.size(); i++) {
 			reviews.get(i).setReviewerName(names.get(i));
+			System.out.println(reviews.get(i)+" "+names.get(i));
 		}
 	}
 }

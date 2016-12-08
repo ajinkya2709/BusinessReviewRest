@@ -28,7 +28,7 @@ public class BusinessMapper {
 			vo.setId(business.getId());
 			voList.add(vo);
 		}
-
+		System.out.println("voList size in Mapper:"+voList.size());
 		return voList;
 	}
 

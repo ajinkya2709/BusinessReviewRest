@@ -8,7 +8,7 @@ public interface BusinessService {
 	
 	public List<String> getAllCityNames(String s);
 	
-	public List<BusinessVO> getBusinessesBasedOnCategory(String city,String category);
+	public List<BusinessVO> getBusinessesBasedOnCategory(String city,String cityWithoutSpaces,String category);
 	
 	public BusinessVO getBusinessDetails(String name);
 	

@@ -42,11 +42,13 @@ public class BusinessServiceImpl implements BusinessService{
 	}
 	
 	@ReadThroughSingleCache(namespace = "businessCat", expiration = 3600)
-	public List<BusinessVO> getBusinessesBasedOnCategory(@ParameterValueKeyProvider(order=1) String city,
+	public List<BusinessVO> getBusinessesBasedOnCategory(String city,@ParameterValueKeyProvider(order=1) String cityWithoutSpaces,
 			@ParameterValueKeyProvider(order=2) String category) {
 		System.out.println("Parameters in service :"+city+"\t"+category);
 		List<Business> domainList = businessDAO.fetchBusinessesBasedOnCategory(city, keyWordMapping.get(category));
 		List<BusinessVO> result = mapper.mapList(domainList);
+		if(result.size()==0)
+		System.out.println("No Businesses found in getBusinessesBasedOnCategory");
 		return result;
 	}
 
@@ -125,7 +127,7 @@ public class BusinessServiceImpl implements BusinessService{
 		System.out.println("Business ID"+business_id);
 		reviewsDAO.setReviewForBusiness(business_id,user_id,text,stars);
 		BusinessVO businessVO = getBusinessDetailsByIdNoMemcached(business_id);
-		System.out.println("setUserReviewBasedOnBusiness start");
+		System.out.println("setUserReviewBasedOnBusiness end");
 		return businessVO;
 	}	
 	
